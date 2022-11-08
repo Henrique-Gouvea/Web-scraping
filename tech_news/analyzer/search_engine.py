@@ -6,11 +6,14 @@ def list_tuple(news_contain_title: list):
     return [(new["title"], new["url"]) for new in news_contain_title]
 
 
-def search_by_title(title: str) -> list:
-    news_contain_title: list = search_news(
-        {"title": {"$regex": title, "$options": "i"}}
+def search_insensitive(key: str, search: str) -> list:
+    return search_news(
+        {key: {"$regex": search, "$options": "i"}}
     )
-    return list_tuple(news_contain_title)
+
+
+def search_by_title(title: str) -> list:
+    return list_tuple(search_insensitive('title', title))
 
 
 def search_by_date(date: str) -> list:
@@ -25,12 +28,8 @@ def search_by_date(date: str) -> list:
 
 
 def search_by_tag(tag: str) -> list:
-    news_contain_tag: list = search_news(
-        {"tags": {'$regex': tag, '$options': 'i'}}
-    )
-    return list_tuple(news_contain_tag)
+    return list_tuple(search_insensitive('tags', tag))
 
 
-# Requisito 9
 def search_by_category(category):
-    """Seu código deve vir aqui"""
+    return list_tuple(search_insensitive('category', category))
