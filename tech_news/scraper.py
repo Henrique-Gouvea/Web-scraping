@@ -26,8 +26,8 @@ def scrape_next_page_link(html_content: str) -> list:
 
 
 def scrape_noticia(html_content: str) -> dict:
-    selector = Selector(html_content)
-    comment = selector.css("h5.title-block::text").get()
+    selector: str = Selector(html_content)
+    comment: str = selector.css("h5.title-block::text").get()
     quantity_comments = (
         comment.split()[0] if (comment.split()[0] != "Arquivos") else 0
     )
@@ -45,10 +45,9 @@ def scrape_noticia(html_content: str) -> dict:
     }
 
 
-# Requisito 5
 def get_tech_news(amount: int) -> list:
     url: str = "https://blog.betrybe.com/"
-    tech_news = []
+    tech_news: list = []
 
     while len(tech_news) < amount:
         html_content: str = fetch(url)
