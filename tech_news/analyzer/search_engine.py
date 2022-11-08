@@ -24,10 +24,9 @@ def search_by_date(date: str) -> list:
         raise ValueError("Data inválida")
 
 
-# Requisito 8
 def search_by_tag(tag: str) -> list:
     news_contain_tag: list = search_news(
-        {"tags": {"$in": [tag]}}
+        {"tags": {'$regex': tag, '$options': 'i'}}
     )
     return list_tuple(news_contain_tag)
 
