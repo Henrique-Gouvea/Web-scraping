@@ -25,8 +25,11 @@ def search_by_date(date: str) -> list:
 
 
 # Requisito 8
-def search_by_tag(tag):
-    """Seu código deve vir aqui"""
+def search_by_tag(tag: str) -> list:
+    news_contain_tag: list = search_news(
+        {"tags": {"$in": [tag]}}
+    )
+    return list_tuple(news_contain_tag)
 
 
 # Requisito 9
