@@ -1,6 +1,7 @@
 import requests
 import time
 from parsel import Selector
+from tech_news.database import create_news
 
 
 def fetch(url: str) -> str:
@@ -14,17 +15,17 @@ def fetch(url: str) -> str:
         return response.text
 
 
-def scrape_novidades(html_content) -> list:
+def scrape_novidades(html_content: str) -> list:
     selector = Selector(html_content)
     return selector.css("a.cs-overlay-link::attr(href)").getall()
 
 
-def scrape_next_page_link(html_content) -> list:
+def scrape_next_page_link(html_content: str) -> list:
     selector = Selector(html_content)
     return selector.css("a.next::attr(href)").get()
 
 
-def scrape_noticia(html_content):
+def scrape_noticia(html_content: str) -> dict:
     selector = Selector(html_content)
     comment = selector.css("h5.title-block::text").get()
     quantity_comments = (
@@ -45,5 +46,16 @@ def scrape_noticia(html_content):
 
 
 # Requisito 5
-def get_tech_news(amount):
-    """Seu código deve vir aqui"""
+def get_tech_news(amount: int) -> list:
+    url: str = "https://blog.betrybe.com/"
+    tech_news = []
+
+    while len(tech_news) < amount:
+        html_content: str = fetch(url)
+        new_links: str = scrape_novidades(html_content)
+        for link in new_links:
+            if len(tech_news) < amount:
+                tech_news.append(scrape_noticia(fetch(link)))
+        url = scrape_next_page_link(html_content)
+    create_news(tech_news)
+    return tech_news
