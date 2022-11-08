@@ -1,12 +1,14 @@
 import requests
+import time
 
 
 def fetch(url: str):
     try:
-        response = requests.get(url, timeout=1)
+        response = requests.get(url, timeout=3)
         response.raise_for_status()
+        time.sleep(1)
     except (requests.HTTPError, requests.ReadTimeout):
-        return ''
+        return None
     else:
         return response.text
 
