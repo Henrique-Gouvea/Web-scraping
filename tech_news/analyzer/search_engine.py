@@ -2,7 +2,7 @@ from tech_news.database import search_news
 from datetime import datetime
 
 
-def list_tuple(news_contain_title: list):
+def list_tuple(news_contain_title: list) -> list:
     return [(new["title"], new["url"]) for new in news_contain_title]
 
 
@@ -31,5 +31,5 @@ def search_by_tag(tag: str) -> list:
     return list_tuple(search_insensitive('tags', tag))
 
 
-def search_by_category(category):
+def search_by_category(category: str) -> list:
     return list_tuple(search_insensitive('category', category))
