@@ -12,10 +12,10 @@ def top_5_news() -> list:
 
 
 # Requisito 11
-def top_5_categories():
+def top_5_categories() -> list:
     news: list = find_news()
-    category_counter = Counter([new["category"] for new in news])
-    order_categories = sorted(
+    category_counter: list = Counter([new["category"] for new in news])
+    order_categories: list = sorted(
         category_counter.items(), key=lambda row: (-row[1], row[0])
     )
     categories_list: list = list(category[0] for category in order_categories)
