@@ -14,14 +14,10 @@ def top_5_news() -> list:
 # Requisito 11
 def top_5_categories():
     news: list = find_news()
-    teste = []
-    for new in news:
-        print(new["tags"])
-        teste.extend(new["tags"])
-    henrique = Counter(teste)
-    teste2 = []
-    for i in sorted(henrique, key=henrique.get, reverse=True):
-        teste2.append(i)
-    print(henrique)
-    print(teste2)
-    return teste2[:5]
+    category_counter = Counter([new["category"] for new in news])
+    order_categories = sorted(
+        category_counter.items(), key=lambda row: (-row[1], row[0])
+    )
+    categories_list: list = list(category[0] for category in order_categories)
+
+    return categories_list[:5]
